@@ -1,12 +1,35 @@
 <template>
-  <div class="home"></div>
+  <div class="grid">
+    <div class="city-link" v-for="(city, idx) in cities" :key="idx">
+      <CurrentCity :city="city" />
+    </div>
+  </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import CurrentCity from "../components/CurrentCity";
 
 export default {
   name: "AddCity",
-  components: {},
+  props: ["cities"],
+  created() {
+    console.log(this.cities);
+  },
+  components: {
+    CurrentCity,
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+.grid {
+  display: grid;
+  padding-top: 80px;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #343a43;
+  @media (min-width: 400px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>

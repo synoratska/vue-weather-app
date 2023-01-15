@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <NavigationTab class="navigation" />
-    <router-view />
+    <NavigationTab />
+    <router-view :cities="cities" />
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 /* eslint-disable */
 import axios from "axios";
 import db from "./firebase/firebaseinit.js";
-import NavigationTab from './components/NavigationTab'
+import NavigationTab from "./components/NavigationTab";
 
 export default {
   name: "App",
@@ -34,13 +34,17 @@ export default {
           if (doc.type === "added") {
             try {
               const response = await axios.get(
-                `https://api.openweathermap.org/data/2.5/weather?q=${doc.doc.data().city}&units=imperial&APPID=${this.APIkey}`
+                `https://api.openweathermap.org/data/2.5/weather?q=${
+                  doc.doc.data().city
+                }&units=imperial&APPID=${this.APIkey}`
               );
-             const data = response.data
-            firebaseDB.doc(doc.doc.id).update({
-              currentWeather: data,
-            }).then(() => this.cities.push(doc.doc.data()))
-            .then(() => console.log(this.cities))
+              const data = response.data;
+              firebaseDB
+                .doc(doc.doc.id)
+                .update({
+                  currentWeather: data,
+                })
+                .then(() => this.cities.push(doc.doc.data()));
             } catch (err) {
               console.log(ee);
             }
@@ -62,16 +66,8 @@ export default {
 
 .main {
   height: 100vh;
-  display: flex;
-  justify-content: center;
-}
-.navigation {
-  z-index: 99;
-  position: fixed;
   max-width: 1024px;
-  width: 100%;
-  box-shadow: 0 4px 6px -1px rgb (0, 0, 0, 0.1), 0 2px 4px -1px rgb(0, 0, 0, 0.06);
-  
+  margin: 0 auto;
 }
 
 .container {
