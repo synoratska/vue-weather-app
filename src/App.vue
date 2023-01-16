@@ -1,6 +1,8 @@
 <template>
   <div class="main">
-    <NavigationTab />
+    <Modal v-if="modalOpen" v-on:close-modal="toggleModal" :APIkey="APIkey" />
+    <NavigationTab v-on:add-city="toggleModal" />
+
     <router-view :cities="cities" />
   </div>
 </template>
@@ -10,16 +12,20 @@
 import axios from "axios";
 import db from "./firebase/firebaseinit.js";
 import NavigationTab from "./components/NavigationTab";
+import Modal from "./components/Modal";
 
 export default {
   name: "App",
   components: {
     NavigationTab,
+    Modal,
   },
+
   data() {
     return {
       APIkey: "3dda9edd3ee57b2989f5ae3038ee7339",
       cities: [],
+      modalOpen: null,
     };
   },
   created() {
@@ -36,7 +42,7 @@ export default {
               const response = await axios.get(
                 `https://api.openweathermap.org/data/2.5/weather?q=${
                   doc.doc.data().city
-                }&units=imperial&APPID=${this.APIkey}`
+                }&units=metric&APPID=${this.APIkey}`
               );
               const data = response.data;
               firebaseDB
@@ -51,6 +57,9 @@ export default {
           }
         });
       });
+    },
+    toggleModal() {
+      this.modalOpen = !this.modalOpen
     },
   },
 };
