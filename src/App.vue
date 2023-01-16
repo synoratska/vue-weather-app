@@ -1,9 +1,9 @@
 <template>
   <div class="main">
     <Modal v-if="modalOpen" v-on:close-modal="toggleModal" :APIkey="APIkey" />
-    <NavigationTab v-on:add-city="toggleModal" />
+    <NavigationTab v-on:add-city="toggleModal" v-on:edit-city="toggleEdit" />
 
-    <router-view :cities="cities" />
+    <router-view :cities="cities" :edit="edit" />
   </div>
 </template>
 
@@ -26,6 +26,7 @@ export default {
       APIkey: "3dda9edd3ee57b2989f5ae3038ee7339",
       cities: [],
       modalOpen: null,
+      edit: null,
     };
   },
   created() {
@@ -37,6 +38,7 @@ export default {
 
       firebaseDB.onSnapshot((snap) => {
         snap.docChanges().forEach(async (doc) => {
+      
           if (doc.type === "added" && !doc.doc.Nd) {
             try {
               const response = await axios.get(
@@ -56,12 +58,17 @@ export default {
             }
           } else if (doc.type === "added" && doc.doc.Nd) {
             this.cities.push(doc.doc.data());
+          } else if (doc.type === 'removed') {
+            this.cities = this.cities.filter((city) => city.city !== doc.doc.data().city)
           }
         });
       });
     },
     toggleModal() {
       this.modalOpen = !this.modalOpen;
+    },
+     toggleEdit() {
+      this.edit = !this.edit;
     },
   },
 };
