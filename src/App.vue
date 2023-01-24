@@ -1,9 +1,22 @@
 <template>
   <div class="main">
     <Modal v-if="modalOpen" v-on:close-modal="toggleModal" :APIkey="APIkey" />
-    <NavigationTab v-on:add-city="toggleModal" v-on:edit-city="toggleEdit" />
+    <Navigation
+      v-on:add-city="toggleModal"
+      v-on:edit-city="toggleEdit"
+      :addCityActive="addCityActive"
+      :isDay="isDay"
+      :isNight="isNight"
+    />
 
-    <router-view :cities="cities" :edit="edit" />
+    <router-view
+      :cities="cities"
+      :edit="edit"
+      :APIkey="APIkey"
+      v-on:is-day="dayTime"
+      v-on:is-night="nightTime"
+      v-on:resetDays="resetDays"
+    />
   </div>
 </template>
 
@@ -11,22 +24,25 @@
 /* eslint-disable */
 import axios from "axios";
 import db from "./firebase/firebaseinit.js";
-import NavigationTab from "./components/NavigationTab";
+import Navigation from "./components/Navigation";
 import Modal from "./components/Modal";
 
 export default {
   name: "App",
   components: {
-    NavigationTab,
+    Navigation,
     Modal,
   },
 
   data() {
     return {
+      isDay: null,
+      isNight: null,
       APIkey: "3dda9edd3ee57b2989f5ae3038ee7339",
       cities: [],
       modalOpen: null,
       edit: null,
+      addCityActive: null,
     };
   },
   created() {
@@ -38,7 +54,6 @@ export default {
 
       firebaseDB.onSnapshot((snap) => {
         snap.docChanges().forEach(async (doc) => {
-      
           if (doc.type === "added" && !doc.doc.Nd) {
             try {
               const response = await axios.get(
@@ -58,8 +73,10 @@ export default {
             }
           } else if (doc.type === "added" && doc.doc.Nd) {
             this.cities.push(doc.doc.data());
-          } else if (doc.type === 'removed') {
-            this.cities = this.cities.filter((city) => city.city !== doc.doc.data().city)
+          } else if (doc.type === "removed") {
+            this.cities = this.cities.filter(
+              (city) => city.city !== doc.doc.data().city
+            );
           }
         });
       });
@@ -67,8 +84,31 @@ export default {
     toggleModal() {
       this.modalOpen = !this.modalOpen;
     },
-     toggleEdit() {
+    toggleEdit() {
       this.edit = !this.edit;
+    },
+    checkRoute() {
+      if (this.$route.name === "AddCity") {
+        this.addCityActive = true;
+      } else {
+        this.addCityActive = false;
+      }
+      console.log(this.addCityActive);
+    },
+    dayTime() {
+      this.isDay = !this.isDay
+    },
+    nightTime() {
+      this.isNight = !this.isNight
+    },
+    resetDays(){
+      this.isDay = false,
+      this.isNight = false
+    }
+  },
+  watch: {
+    $route() {
+      this.checkRoute();
     },
   },
 };

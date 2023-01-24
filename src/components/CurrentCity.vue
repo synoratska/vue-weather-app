@@ -1,5 +1,5 @@
 <template>
-  <div class="city">
+  <div @click="goToWeather" class="city">
     <i
       v-if="edit"
       @click="removeCity"
@@ -45,16 +45,22 @@ export default {
   },
   methods: {
     removeCity() {
-      db.collection("cities")
-        .where("city", "==", `${this.city.city}`)
-        .get()
-        .then((docs) => {
-          docs.forEach((doc) => {this.id = doc.id});
+      db.collection("cities").where("city", "==", `${this.city.city}`).get().then((docs) => {
+          docs.forEach((doc) => {
+            this.id = doc.id
+          });
         })
         .then(() => {
           db.collection('cities').doc(this.id).delete()
         });
     },
+    goToWeather(e) {
+      if(e.target === this.$refs.edit) {
+// 
+      } else {
+        this.$router.push({name: 'CityWeather', params: {city: this.city.city}})
+      }
+    }
   },
 };
 </script>

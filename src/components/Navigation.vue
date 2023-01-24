@@ -1,5 +1,6 @@
 <template>
-  <header class="container add-city">
+<div>
+    <header v-if="addCityActive" class="container add-city">
     <nav>
       <span>Add City</span>
       <div class="right">
@@ -9,11 +10,26 @@
       </div>
     </nav>
   </header>
+  <header v-else class="container" :class="{day: isDay, night: isNight}">
+    <nav>
+      <router-link class="router-link"  :to="{name: 'AddCity'}">
+        <i class="fas fa-plus"></i>
+      </router-link>
+      <span>
+        {{ new Date().toLocaleString('en-us', {weekday: 'short'}) }},
+        {{ new Date().toLocaleString('en-us', {month: 'short'}) }},
+        {{ new Date().toLocaleString('en-us', {day: '2-digit'}) }}
+      </span>
+      <span>&deg; C</span>
+    </nav>
+  </header>
+</div>
 </template>
 
 <script>
 export default {
   name: "NavigationTab",
+  props: ['addCityActive', 'isDay', 'isNight'],
   methods: {
     addCity() {
       this.$emit('add-city')
@@ -30,6 +46,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.add-city {
+  background-color: #313640;
+}
+
+.day {
+  transition: 500ms ease all;
+  background-color: #3b96f9;
+}
+
+.night {
+  transition: 500ms ease all;
+  background-color: #142a5f;
+}
+
 header {
    z-index: 99;
   position: fixed;
@@ -46,6 +77,10 @@ nav {
 
 .edit-active {
   color: #900c0c
+}
+
+.router-link {
+  color: #fff;
 }
 
 .add-city {
