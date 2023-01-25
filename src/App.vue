@@ -10,6 +10,8 @@
     />
 
     <router-view
+      :isDay="isDay"
+      :isNight="isNight"
       :cities="cities"
       :edit="edit"
       :APIkey="APIkey"
@@ -96,15 +98,14 @@ export default {
       console.log(this.addCityActive);
     },
     dayTime() {
-      this.isDay = !this.isDay
+      this.isDay = !this.isDay;
     },
     nightTime() {
-      this.isNight = !this.isNight
+      this.isNight = !this.isNight;
     },
-    resetDays(){
-      this.isDay = false,
-      this.isNight = false
-    }
+    resetDays() {
+      (this.isDay = false), (this.isNight = false);
+    },
   },
   watch: {
     $route() {
@@ -120,6 +121,20 @@ export default {
   padding: 0;
   box-sizing: border-box;
   font-family: "Quicksand", sans-serif;
+}
+
+.day {
+  transition: 500ms ease all;
+  background-color: #3b96f9;
+  box-shadow: 2px 5px 7px -2px rgb (0, 0, 0, 0.1),
+    2px 3px 4px -2px rgba(250, 197, 5, 0.891);
+}
+
+.night {
+  transition: 500ms ease all;
+  background-color: #142a5f;
+  box-shadow: 2px 5px 7px -2px rgb (0, 0, 0, 0.1),
+    2px 3px 4px -2px rgba(250, 197, 5, 0.891);
 }
 
 .main {
