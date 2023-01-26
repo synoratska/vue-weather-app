@@ -6,6 +6,8 @@
     <div v-else class="weather" :class="{ day: isDay, night: isNight }">
       <div class="weather-wrap">
      <CurrentWeather :isDay="isDay" :isNight="isNight" :currentWeather="currentWeather" />
+
+     <HourlyWeather :forecast="forecast" />
     </div>
     </div>
   </div>
@@ -15,11 +17,13 @@
 import axios from "axios";
 import db from "../firebase/firebaseinit.js";
 import CurrentWeather from '../components/CurrentWeather.vue'
+import HourlyWeather from '../components/HourlyWeather.vue'
 
 export default {
   name: "CityWeather",
   components:{
    CurrentWeather,
+   HourlyWeather
   },
   props: ["APIkey", "isDay", "isNight"],
   data() {
@@ -49,7 +53,7 @@ export default {
                   doc.data().currentWeather.coord.lat
                 }&lon=${
                   doc.data().currentWeather.coord.lon
-                }&exclude=current,minutely,alerts&units=imperial&appid=${
+                }&exclude=current,minutely,alerts&units=metric&appid=${
                   this.APIkey
                 }`
               )
