@@ -49,7 +49,7 @@ export default {
 .add-city {
   background-color: #313640;
   box-shadow: 2px 5px 7px -2px rgb (0, 0, 0, 0.1),
-    2px 3px 4px -2px rgba(250, 197, 5, 0.891)
+    2px 3px 4px -2px rgba(250, 197, 5, 0.891);
 }
 
 header {

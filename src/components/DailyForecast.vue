@@ -50,17 +50,17 @@ export default {
   }
 
   .weather {
-   display: flex;
-   justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
 
-   span {
-    min-width: 20px;
-   }
+    span {
+      min-width: 20px;
+    }
 
-   .high {
-    font-weight: 500;
-    margin-right: 12px;
-   }
+    .high {
+      font-weight: 500;
+      margin-right: 12px;
+    }
   }
 }
 </style>

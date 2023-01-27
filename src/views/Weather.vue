@@ -5,12 +5,15 @@
     </div>
     <div v-else class="weather" :class="{ day: isDay, night: isNight }">
       <div class="weather-wrap">
-     <CurrentWeather :isDay="isDay" :isNight="isNight" :currentWeather="currentWeather" />
-
-     <HourlyWeather :forecast="forecast" />
-
-     <WeeklyForecast :forecast="forecast"/>
-    </div>
+        <CurrentWeather
+          :isDay="isDay"
+          :isNight="isNight"
+          :currentWeather="currentWeather"
+        />
+        <HourlyWeather :forecast="forecast" />
+        <WeeklyForecast :forecast="forecast" />
+        <AdditionalInfo :currentWeather="currentWeather" />
+      </div>
     </div>
   </div>
 </template>
@@ -18,16 +21,18 @@
 <script>
 import axios from "axios";
 import db from "../firebase/firebaseinit.js";
-import CurrentWeather from '../components/CurrentWeather.vue'
-import HourlyWeather from '../components/HourlyWeather.vue'
-import WeeklyForecast from '../components/WeeklyForecast.vue'
+import CurrentWeather from "../components/CurrentWeather.vue";
+import HourlyWeather from "../components/HourlyWeather.vue";
+import WeeklyForecast from "../components/WeeklyForecast.vue";
+import AdditionalInfo from '../components/AdditionalInfo.vue'
 
 export default {
   name: "CityWeather",
-  components:{
-   CurrentWeather,
-   HourlyWeather,
-   WeeklyForecast,
+  components: {
+    CurrentWeather,
+    HourlyWeather,
+    WeeklyForecast,
+    AdditionalInfo,
   },
   props: ["APIkey", "isDay", "isNight"],
   data() {
@@ -118,10 +123,9 @@ export default {
   width: 100%;
   height: 100%;
   .weather-wrap {
-  overflow: hidden;
-  max-width: 1024px;
-  margin: 0 auto;
+    overflow: hidden;
+    max-width: 1024px;
+    margin: 0 auto;
+  }
 }
-}
-
 </style>

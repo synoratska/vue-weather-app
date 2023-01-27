@@ -6,27 +6,28 @@
         <span class="current-temperature">{{
           Math.round(this.currentWeather.main.temp)
         }}</span>
-     
-      <div class="high-low-temperatures">
-        <div class="high">
-          <i class="fas fa-chevron-up"> </i>
+
+        <div class="high-low-temperatures">
+          <div class="high">
+            <i class="fas fa-chevron-up"> </i>
             <span
               >{{ Math.round(this.currentWeather.main.temp_max) }}&deg;</span
             >
-         
+          </div>
+          <div class="low">
+            <i class="fas fa-chevron-down"></i>
+            <span
+              >{{ Math.round(this.currentWeather.main.temp_min) }}&deg;</span
+            >
+          </div>
         </div>
-        <div class="low">
-          <i class="fas fa-chevron-down"></i>
-          <span>{{ Math.round(this.currentWeather.main.temp_min) }}&deg;</span>
-        </div>
-      </div>
-      <span class="condition">{{
-        this.currentWeather.weather[0].description
-      }}</span>
-      <span class="feels-like"
-        >Feels like
-        {{ Math.round(this.currentWeather.main.feels_like) }}&deg;</span
-      >
+        <span class="condition">{{
+          this.currentWeather.weather[0].description
+        }}</span>
+        <span class="feels-like"
+          >Feels like
+          {{ Math.round(this.currentWeather.main.feels_like) }}&deg;</span
+        >
       </div>
       <div class="weather-icon">
         <img v-if="isDay" src="../../public/sun.png" alt="day_icon" />
@@ -108,10 +109,9 @@ export default {
     display: flex;
     align-items: center;
     img {
-     width: 366px;
-     height: 366px;
+      width: 366px;
+      height: 366px;
     }
-
   }
 }
 </style>

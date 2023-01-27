@@ -11,7 +11,7 @@ import CurrentCity from "../components/CurrentCity";
 
 export default {
   name: "AddCity",
-  props: ["cities", 'edit'],
+  props: ["cities", "edit"],
   created() {
     console.log(this.cities);
   },

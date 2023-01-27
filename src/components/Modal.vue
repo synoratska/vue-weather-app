@@ -39,12 +39,15 @@ export default {
           `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&APPID=${this.APIkey}`
         );
         const data = await res.data;
-        db.collection("cities").doc().set({
-          city: this.city,
-          currentWeather: data,
-        }). then(() => {
-          this.$emit('close-modal')
-        })
+        db.collection("cities")
+          .doc()
+          .set({
+            city: this.city,
+            currentWeather: data,
+          })
+          .then(() => {
+            this.$emit("close-modal");
+          });
       }
     },
   },
