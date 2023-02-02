@@ -1,7 +1,7 @@
 <template>
   <div class="grid">
     <div class="city-link" v-for="(city, idx) in cities" :key="idx">
-      <CurrentCity :city="city" :edit="edit" />
+      <CurrentCity v-bind:city="city" v-bind:edit="edit" />
     </div>
   </div>
 </template>
@@ -13,7 +13,7 @@ export default {
   name: "AddCity",
   props: ["cities", "edit"],
   created() {
-    console.log(this.cities);
+    // console.log(this.cities);
   },
   components: {
     CurrentCity,

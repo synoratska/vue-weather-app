@@ -15,12 +15,12 @@
         <router-link class="router-link" :to="{ name: 'AddCity' }">
           <i class="fas fa-plus"></i>
         </router-link>
-        <span>
-          {{ new Date().toLocaleString("en-us", { weekday: "short" }) }},
-          {{ new Date().toLocaleString("en-us", { month: "short" }) }},
-          {{ new Date().toLocaleString("en-us", { day: "2-digit" }) }}
-        </span>
-        <span>&deg; C</span>
+        <span
+          >{{ new Date().toLocaleString("en-us", { weekday: "short" }) }},
+          {{ new Date().toLocaleString("en-us", { month: "short" }) }}
+          {{ new Date().toLocaleString("en-us", { day: "2-digit" }) }}</span
+        >
+        <span>&deg; F</span>
       </nav>
     </header>
   </div>
@@ -48,48 +48,36 @@ export default {
 <style lang="scss" scoped>
 .add-city {
   background-color: #313640;
-  box-shadow: 2px 5px 7px -2px rgb (0, 0, 0, 0.1),
-    2px 3px 4px -2px rgba(250, 197, 5, 0.891);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
-
 header {
   z-index: 99;
   position: fixed;
   max-width: 1024px;
   width: 100%;
-}
-nav {
-  display: flex;
-  color: #fff;
-  padding: 30px 0;
-  justify-content: space-between;
-}
-
-.edit-active {
-  color: #900c0c;
-}
-
-.router-link {
-  color: #fff;
-}
-
-.add-city {
-  background-color: #313640;
-}
-
-.right {
-  i:nth-child(2),
-  i:nth-child(3) {
-    margin-left: 16px;
+  nav {
+    display: flex;
+    color: #fff;
+    padding: 30px 0;
+    justify-content: space-between;
   }
-
-  i {
-    font-size: 20px;
+  .edit-active {
+    color: rgba(210, 75, 75, 1);
   }
-}
-
-span {
-  font-weight: 600;
-  font-size: 18px;
+  .router-link {
+    color: #fff;
+  }
+  .right {
+    i {
+      font-size: 20px;
+    }
+    i:nth-child(2),
+    i:nth-child(3) {
+      margin-left: 16px;
+    }
+  }
+  span {
+    font-weight: 600;
+  }
 }
 </style>

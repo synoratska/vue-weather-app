@@ -1,6 +1,6 @@
 <template>
   <div @click="closeModal" class="modal" ref="modal">
-    <div class="modal-wrap" ref="modalRef">
+    <div class="modal-wrap" ref="modalWrap">
       <label for="city-name">Enter Location</label>
       <input
         type="text"
@@ -19,7 +19,7 @@ import db from "../firebase/firebaseinit.js";
 
 export default {
   name: "ModalComp",
-  props: ["APIkey"],
+  props: ["APIkey", 'cities'],
   data() {
     return {
       city: "",
@@ -33,21 +33,27 @@ export default {
     },
     async addCity() {
       if (this.city === "") {
-        alert("Field cannot be empty");
+        alert("field cannot be empty");
+      } else if (this.cities.some((res) => res.city === this.city.toLowerCase())) {
+        alert(`${this.city} already exists!`);
       } else {
-        const res = await axios(
-          `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&APPID=${this.APIkey}`
-        );
-        const data = await res.data;
-        db.collection("cities")
-          .doc()
-          .set({
-            city: this.city,
-            currentWeather: data,
-          })
-          .then(() => {
-            this.$emit("close-modal");
-          });
+        try {
+          const res = await axios.get(
+            `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&APPID=${this.APIkey}`
+         );
+          const data = await res.data;
+          db.collection("cities")
+            .doc()
+            .set({
+              city: this.city.toLowerCase(),
+              currentWeather: data,
+            })
+            .then(() => {
+              this.$emit("close-modal");
+            });
+        } catch {
+          alert(`${this.city} does not exist, please try again!`);
+        }
       }
     },
   },

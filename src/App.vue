@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <Modal v-if="modalOpen" v-on:close-modal="toggleModal" :APIkey="APIkey" />
+    <Modal v-if="modalOpen" v-on:close-modal="toggleModal" :APIkey="APIkey" :cities="cities" />
     <Navigation
       v-on:add-city="toggleModal"
       v-on:edit-city="toggleEdit"
@@ -49,6 +49,7 @@ export default {
   },
   created() {
     this.getCityWeather();
+    this.checkRoute()
   },
   methods: {
     getCityWeather() {
@@ -95,7 +96,7 @@ export default {
       } else {
         this.addCityActive = false;
       }
-      console.log(this.addCityActive);
+      // console.log(this.addCityActive);
     },
     dayTime() {
       this.isDay = !this.isDay;
@@ -104,7 +105,8 @@ export default {
       this.isNight = !this.isNight;
     },
     resetDays() {
-      (this.isDay = false), (this.isNight = false);
+      this.isDay = false;
+      this.isNight = false;
     },
   },
   watch: {
@@ -126,15 +128,13 @@ export default {
 .day {
   transition: 500ms ease all;
   background-color: #3b96f9;
-  box-shadow: 2px 5px 7px -2px rgb (0, 0, 0, 0.1),
-    2px 3px 4px -2px rgba(250, 197, 5, 0.891);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .night {
   transition: 500ms ease all;
   background-color: #142a5f;
-  box-shadow: 2px 5px 7px -2px rgb (0, 0, 0, 0.1),
-    2px 3px 4px -2px rgba(250, 197, 5, 0.891);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .main {

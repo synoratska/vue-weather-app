@@ -44,7 +44,7 @@ export default {
     };
   },
   methods: {
-    removeCity() {
+     removeCity() {
       db.collection("cities")
         .where("city", "==", `${this.city.city}`)
         .get()
@@ -54,17 +54,16 @@ export default {
           });
         })
         .then(() => {
-          db.collection("cities").doc(this.id).delete();
+          db.collection("cities")
+            .doc(this.id)
+            .delete();
         });
     },
     goToWeather(e) {
       if (e.target === this.$refs.edit) {
         //
       } else {
-        this.$router.push({
-          name: "CityWeather",
-          params: { city: this.city.city },
-        });
+        this.$router.push({ name: "CityWeather", params: { city: this.city.city } });
       }
     },
   },
