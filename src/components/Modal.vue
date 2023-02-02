@@ -56,25 +56,30 @@ export default {
         }
       }
     },
+   
   },
 };
 </script>
 
 <style lang="scss" scoped>
+
+
 .modal {
   z-index: 101;
   background: rgb(0, 0, 0, 0.5);
   position: fixed;
+  left: 0;
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: center !important;
   align-items: center;
 
   label {
     color: #fff;
   }
   .modal-wrap {
+    
     max-width: 500px;
     border-radius: 8px;
     width: 80%;

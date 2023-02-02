@@ -1,24 +1,35 @@
 <template>
   <div class="main">
-    <Modal v-if="modalOpen" v-on:close-modal="toggleModal" :APIkey="APIkey" :cities="cities" />
-    <Navigation
-      v-on:add-city="toggleModal"
-      v-on:edit-city="toggleEdit"
-      :addCityActive="addCityActive"
-      :isDay="isDay"
-      :isNight="isNight"
-    />
+    <div v-if="isLoading" class="loading">
+      <span></span>
+    </div>
+    <div v-else class="app">
+      <Modal
+        v-if="modalOpen"
+        v-on:close-modal="toggleModal"
+        :APIkey="APIkey"
+        :cities="cities"
+      />
+      <Navigation
+        v-on:add-city="toggleModal"
+        v-on:edit-city="toggleEdit"
+        :addCityActive="addCityActive"
+        :isDay="isDay"
+        :isNight="isNight"
+      />
 
-    <router-view
-      :isDay="isDay"
-      :isNight="isNight"
-      :cities="cities"
-      :edit="edit"
-      :APIkey="APIkey"
-      v-on:is-day="dayTime"
-      v-on:is-night="nightTime"
-      v-on:resetDays="resetDays"
-    />
+      <router-view
+        :isDay="isDay"
+        :isNight="isNight"
+        :cities="cities"
+        :edit="edit"
+        :APIkey="APIkey"
+        v-on:is-day="dayTime"
+        v-on:is-night="nightTime"
+        v-on:resetDays="resetDays"
+        v-on:add-city="toggleModal"
+      />
+    </div>
   </div>
 </template>
 
@@ -45,17 +56,21 @@ export default {
       modalOpen: null,
       edit: null,
       addCityActive: null,
+      isLoading: true,
     };
   },
   created() {
     this.getCityWeather();
-    this.checkRoute()
+    this.checkRoute();
   },
   methods: {
     getCityWeather() {
       let firebaseDB = db.collection("cities");
 
       firebaseDB.onSnapshot((snap) => {
+      if(snap.docs.length === 0) {
+        this.isLoading = false
+      }
         snap.docChanges().forEach(async (doc) => {
           if (doc.type === "added" && !doc.doc.Nd) {
             try {
@@ -70,7 +85,10 @@ export default {
                 .update({
                   currentWeather: data,
                 })
-                .then(() => this.cities.push(doc.doc.data()));
+                .then(() => {
+                  this.cities.push(doc.doc.data());
+                  this.isLoading = false;
+                });
             } catch (err) {
               console.log(err);
             }
@@ -128,13 +146,15 @@ export default {
 .day {
   transition: 500ms ease all;
   background-color: #3b96f9;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .night {
   transition: 500ms ease all;
   background-color: #142a5f;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .main {
@@ -145,5 +165,27 @@ export default {
 
 .container {
   padding: 0 20px;
+}
+.loading {
+  @keyframes spin {
+    to {
+      transform: rotateZ(360deg);
+    }
+  }
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  span {
+    display: block;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    border: 2px solid transparent;
+    border-top-color: #142a5f;
+    border-radius: 50%;
+    animation: spin ease 1000ms infinite;
+  }
 }
 </style>
