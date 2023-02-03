@@ -12,5 +12,5 @@ Fully responsive.
 
 [Vue Weather App]
 
-[![project18.png](https://i.postimg.cc/tC38R9MT/project18.png)](https://postimg.cc/sv2TwCyd)
-[![project18a.png](https://i.postimg.cc/cCyZjXr5/project18a.png)](https://postimg.cc/gXDfLyyv)
+[![project18.png](https://i.postimg.cc/SQTfW3Yr/project18.png)](https://postimg.cc/fkddsHKt)
+[![project18a.png](https://i.postimg.cc/jSVNcbxz/project18a.png)](https://postimg.cc/8jHjkxr5)
