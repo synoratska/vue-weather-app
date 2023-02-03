@@ -1,24 +1,15 @@
 # vueweather
 
-## Project setup
-```
-npm install
-```
+Here is deployed version:
+### [Live Site](https://vue-weather-appp.netlify.app/)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Introduction
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Weather app, built with Openweathermap API. 
+You can add and delete chosen city. 
+Also, you can check the info about current city by clicking to it.
+Fully responsive.
 
-### Lints and fixes files
-```
-npm run lint
-```
+[Vue Weather App]
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[![project18.png](https://i.postimg.cc/tC38R9MT/project18.png)](https://postimg.cc/sv2TwCyd)
